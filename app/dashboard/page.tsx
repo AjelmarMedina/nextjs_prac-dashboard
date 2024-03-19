@@ -1,6 +1,5 @@
 import Link from 'next/link';
 
-
 export default function Page() {
   return (
     <main className="flex min-h-full max-h-full min-w-full flex-col items-center justify-center">
