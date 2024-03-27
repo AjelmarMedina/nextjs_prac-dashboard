@@ -7,11 +7,6 @@ import Search from '@/app/ui/search';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 
-Pagination
-Table
-InvoicesTableSkeleton
-Suspense
-
 export default async function Page({
   searchParams
 }: {
