@@ -1,20 +1,29 @@
 'use client';
 
+import { generatePagination } from '@/app/lib/utils';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { generatePagination } from '@/app/lib/utils';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
-  // NOTE: comment in this code when you get to this point in the course
+  const pathName = usePathname();
+  const searchParams = useSearchParams();
 
-  // const allPages = generatePagination(currentPage, totalPages);
+  const params = new URLSearchParams(searchParams);
+  const currentPage = Number(params.get(`page`)) || 1;
+  const allPages = generatePagination(currentPage, totalPages);
+
+  function createPageURL(newPage: number | string): string {
+    if (typeof newPage === 'string') return "";
+    params.set(`page`, newPage.toString())
+    const path = `${pathName}?${params.toString()}`
+    return path;
+  }
 
   return (
     <>
-      {/* NOTE: comment in this code when you get to this point in the course */}
-
-      {/* <div className="inline-flex">
+      <div className="inline-flex">
         <PaginationArrow
           direction="left"
           href={createPageURL(currentPage - 1)}
@@ -47,7 +56,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
           href={createPageURL(currentPage + 1)}
           isDisabled={currentPage >= totalPages}
         />
-      </div> */}
+      </div>
     </>
   );
 }
@@ -63,6 +72,7 @@ function PaginationNumber({
   position?: 'first' | 'last' | 'middle' | 'single';
   isActive: boolean;
 }) {
+  
   const className = clsx(
     'flex h-10 w-10 items-center justify-center text-sm border',
     {
